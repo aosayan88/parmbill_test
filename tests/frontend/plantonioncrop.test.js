@@ -10,14 +10,13 @@ const screen = {
   height: 1920
 };
 
-describe('Plant a potato crop', function() {
+describe('plant_onion_crop', function() {
   this.timeout(30000)
   let driver
   let vars
-  let url
   beforeEach(async function() {
-    let chrome_options = new chrome.Options().headless().windowSize(screen);
-    //let chrome_options = new chrome.Options().windowSize(screen);
+    //let chrome_options = new chrome.Options().headless().windowSize(screen);
+    let chrome_options = new chrome.Options().windowSize(screen);
     url = "http://127.0.0.1:5501/bahay_cube.html";
 
     driver = await new Builder()
@@ -37,16 +36,16 @@ describe('Plant a potato crop', function() {
     // 2 | setWindowSize | 1294x1392 | 
     await driver.manage().window().setRect({ width: 1294, height: 1392 })
     // 3 | click | id=tile_id_0 | 
-    await driver.findElement(By.id("tile_id_0")).click()
+    await driver.findElement(By.id("tile_id_5")).click()
     // 4 | click | css=.till_btn | 
     await driver.findElement(By.css(".till_btn")).click()
     // 5 | click | id=tile_id_0 | 
-    let selected_tile = await driver.findElement(By.id("tile_id_0"));
+    let selected_tile = await driver.findElement(By.id("tile_id_5"));
     let tile_class = await selected_tile.getAttribute('class');
     expect(tile_class).to.eq('tilled');
   })
 
-  it("Selected tile class should have 'potato_planted'", async function() {
+  it("Selected tile class should have 'onion_planted'", async function() {
     // Test name: plant_potato_crop
     // Step # | name | target | value
     // 1 | open | http://127.0.0.1:5501/bahay_cube.html | 
@@ -54,24 +53,24 @@ describe('Plant a potato crop', function() {
     // 2 | setWindowSize | 1294x1392 | 
     await driver.manage().window().setRect({ width: 1294, height: 1392 })
     // 3 | click | id=tile_id_0 | 
-    await driver.findElement(By.id("tile_id_0")).click()
+    await driver.findElement(By.id("tile_id_5")).click()
     // 4 | click | css=.till_btn | 
     await driver.findElement(By.css(".till_btn")).click()
     // 5 | click | id=tile_id_0 | 
-    await driver.findElement(By.id("tile_id_0")).click()
+    await driver.findElement(By.id("tile_id_5")).click()
     // 6 | click | css=.plant_btn | 
     await driver.findElement(By.css(".plant_btn")).click()
-    // 7 | click | xpath=//label[@id='potato_crop'] | 
-    await driver.wait(until.elementIsVisible(await driver.findElement(By.xpath("//label[@id=\'potato_crop\']"))), 3000)
+    // 7 | click | xpath=//label[@id='onion_crop'] | 
+    await driver.wait(until.elementIsVisible(await driver.findElement(By.xpath("//label[@id=\'onion_crop\']"))), 3000).click();
     await driver.sleep(2000);
     // 8 | click | id=crop_to_plant_btn | 
     await driver.findElement(By.id("crop_to_plant_btn")).click()
-    selected_tile  = await driver.findElement(By.id("tile_id_0"));
+    selected_tile  = await driver.findElement(By.id("tile_id_5"));
     let tile_class = await selected_tile.getAttribute('class');
-    expect(tile_class).to.not.eq('potato_planted');
+    expect(tile_class).to.not.eq('onion_planted');
   })
 
-  it("Total Earnings should have a value of 90", async function() {
+  it("Total Earnings should have a value of 85", async function() {
     // Test name: plant_potato_crop
     // Step # | name | target | value
     // 1 | open | http://127.0.0.1:5501/bahay_cube.html | 
@@ -79,21 +78,21 @@ describe('Plant a potato crop', function() {
     // 2 | setWindowSize | 1294x1392 | 
     await driver.manage().window().setRect({ width: 1294, height: 1392 })
     // 3 | click | id=tile_id_0 | 
-    await driver.findElement(By.id("tile_id_0")).click()
+    await driver.findElement(By.id("tile_id_5")).click()
     // 4 | click | css=.till_btn | 
     await driver.findElement(By.css(".till_btn")).click()
     // 5 | click | id=tile_id_0 | 
-    await driver.findElement(By.id("tile_id_0")).click()
+    await driver.findElement(By.id("tile_id_5")).click()
     // 6 | click | css=.plant_btn | 
     await driver.findElement(By.css(".plant_btn")).click()
-    // 7 | click | xpath=//label[@id='potato_crop'] | 
-    await driver.wait(until.elementIsVisible(await driver.findElement(By.xpath("//label[@id=\'potato_crop\']"))), 3000)
+    // 7 | click | xpath=//label[@id='onion_crop'] | 
+    await driver.wait(until.elementIsVisible(await driver.findElement(By.xpath("//label[@id=\'onion_crop\']"))), 3000).click()
     await driver.sleep(2000);
     // 9 | click | id=crop_to_plant_btn | 
     await driver.findElement(By.id("crop_to_plant_btn")).click()
-    // 10 | verifyElementPresent | css=.potato_planted | 
-    // 11 | verifyText | css=.total_earnings_value | 90
+    // 10 | verifyElementPresent | css=.onion_planted | 
+    // 11 | verifyText | css=.total_earnings_value | 85
     let total_earnings = await driver.findElement(By.css(".total_earnings_value")).getText()
-    expect(total_earnings).to.eq("90");
+    expect(total_earnings).to.eq("85");
   })
 })

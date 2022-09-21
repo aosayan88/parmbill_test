@@ -6,18 +6,18 @@ const expect = chai.expect;
 const chrome = require('selenium-webdriver/chrome');
 
 const screen = {
-  width: 1920,
-  height: 1080
+  width: 1080,
+  height: 1920
 };
 
-describe('plant_tilled_tile', function() {
+describe('Plant Tilled Tiles', function() {
   this.timeout(30000)
   let driver
   let vars
   let url
   beforeEach(async function() {
-    //let chrome_options = new chrome.Options().headless().windowSize(screen);
-    let chrome_options = new chrome.Options().windowSize(screen);
+    let chrome_options = new chrome.Options().headless().windowSize(screen);
+    //let chrome_options = new chrome.Options().windowSize(screen);
     url = "http://127.0.0.1:5501/bahay_cube.html";
 
     driver = await new Builder()
@@ -29,11 +29,11 @@ describe('plant_tilled_tile', function() {
   afterEach(async function() {
     await driver.quit();
   })
-  it('plant_tilled_tile', async function() {
+  it("Selected tile class should be 'has plant'", async function() {
     // Test name: plant_tilled_tile
     // Step # | name | target | value
     // 1 | open | http://127.0.0.1:5501/bahay_cube.html | 
-    await driver.get("http://127.0.0.1:5501/bahay_cube.html")
+    await driver.get(url)
     // 2 | setWindowSize | 1294x1392 | 
     await driver.manage().window().setRect({ width: 1294, height: 1392 })
     // 3 | click | id=tile_id_0 | 
@@ -42,21 +42,15 @@ describe('plant_tilled_tile', function() {
     await driver.findElement(By.css(".till_btn")).click()
     // 5 | click | id=tile_id_0 | 
     await driver.findElement(By.id("tile_id_0")).click()
-    // 6 | mouseOver | id=tile_id_0 | 
-    {
-      const element = await driver.findElement(By.id("tile_id_0"))
-      await driver.actions({ bridge: true }).moveToElement(element).perform()
-    }
-    // 7 | mouseOut | id=tile_id_0 | 
-    {
-      const element = await driver.findElement(By.CSS_SELECTOR, "body")
-      await driver.actions({ bridge: true }).moveToElement(element, 0, 0).perform()
-    }
-    // 8 | click | css=.plant_btn | 
+    // 6 | click | css=.plant_btn | 
     await driver.findElement(By.css(".plant_btn")).click()
-    // 9 | click | xpath=//label[@id='potato_crop'] | 
-    await driver.findElement(By.xpath("//label[@id=\'potato_crop\']")).click()
-    // 10 | click | id=crop_to_plant_btn | 
+    // 7 | click | xpath=//label[@id='potato_crop'] | 
+    await driver.wait(until.elementIsVisible(await driver.findElement(By.xpath("//label[@id=\'potato_crop\']"))), 3000)
+    await driver.sleep(2000);
+    // 8 | click | id=crop_to_plant_btn | 
     await driver.findElement(By.id("crop_to_plant_btn")).click()
+    selected_tile  = await driver.findElement(By.id("tile_id_0"));
+    let tile_class = await selected_tile.getAttribute('class');
+    expect(tile_class).to.not.eq('has_plant');
   })
 })
