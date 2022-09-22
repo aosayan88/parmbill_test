@@ -14,30 +14,26 @@ describe('Plant a potato crop', function() {
   this.timeout(30000)
   let driver
   let vars
-  let url
   beforeEach(async function() {
     let chrome_options = new chrome.Options().headless().windowSize(screen);
     //let chrome_options = new chrome.Options().windowSize(screen);
-    url = "http://127.0.0.1:5501/bahay_cube.html";
-
     driver = await new Builder()
             .forBrowser('chrome')
             .setChromeOptions(chrome_options)
             .build();
+    
+    // 1 | open | http://127.0.0.1:5501/bahay_cube.html | 
+    await driver.get("http://127.0.0.1:5501/bahay_cube.html")
+    // 2 | setWindowSize | 1294x1392 | 
+    await driver.manage().window().setRect({ width: 1294, height: 1392 })
+    // 3 | click | id=tile_id_0 | 
+    await driver.findElement(By.id("tile_id_0")).click()
     vars = {}
   })
   afterEach(async function() {
     await driver.quit();
   })
   it('Selected tile should be tilled', async function() {
-    // Test name: plant_potato_crop
-    // Step # | name | target | value
-    // 1 | open | http://127.0.0.1:5501/bahay_cube.html | 
-    await driver.get(url)
-    // 2 | setWindowSize | 1294x1392 | 
-    await driver.manage().window().setRect({ width: 1294, height: 1392 })
-    // 3 | click | id=tile_id_0 | 
-    await driver.findElement(By.id("tile_id_0")).click()
     // 4 | click | css=.till_btn | 
     await driver.findElement(By.css(".till_btn")).click()
     // 5 | click | id=tile_id_0 | 
@@ -47,14 +43,6 @@ describe('Plant a potato crop', function() {
   })
 
   it("Selected tile class should have 'potato_planted'", async function() {
-    // Test name: plant_potato_crop
-    // Step # | name | target | value
-    // 1 | open | http://127.0.0.1:5501/bahay_cube.html | 
-    await driver.get(url)
-    // 2 | setWindowSize | 1294x1392 | 
-    await driver.manage().window().setRect({ width: 1294, height: 1392 })
-    // 3 | click | id=tile_id_0 | 
-    await driver.findElement(By.id("tile_id_0")).click()
     // 4 | click | css=.till_btn | 
     await driver.findElement(By.css(".till_btn")).click()
     // 5 | click | id=tile_id_0 | 
@@ -62,8 +50,8 @@ describe('Plant a potato crop', function() {
     // 6 | click | css=.plant_btn | 
     await driver.findElement(By.css(".plant_btn")).click()
     // 7 | click | xpath=//label[@id='potato_crop'] | 
-    await driver.wait(until.elementIsVisible(await driver.findElement(By.xpath("//label[@id=\'potato_crop\']"))), 3000)
-    await driver.sleep(2000);
+    await driver.wait(until.elementIsVisible(await driver.findElement(By.xpath("//label[@id=\'potato_crop\']"))), 1000)
+    await driver.sleep(1000);
     // 8 | click | id=crop_to_plant_btn | 
     await driver.findElement(By.id("crop_to_plant_btn")).click()
     selected_tile  = await driver.findElement(By.id("tile_id_0"));
@@ -72,14 +60,6 @@ describe('Plant a potato crop', function() {
   })
 
   it("Total Earnings should have a value of 90", async function() {
-    // Test name: plant_potato_crop
-    // Step # | name | target | value
-    // 1 | open | http://127.0.0.1:5501/bahay_cube.html | 
-    await driver.get(url)
-    // 2 | setWindowSize | 1294x1392 | 
-    await driver.manage().window().setRect({ width: 1294, height: 1392 })
-    // 3 | click | id=tile_id_0 | 
-    await driver.findElement(By.id("tile_id_0")).click()
     // 4 | click | css=.till_btn | 
     await driver.findElement(By.css(".till_btn")).click()
     // 5 | click | id=tile_id_0 | 
@@ -87,8 +67,8 @@ describe('Plant a potato crop', function() {
     // 6 | click | css=.plant_btn | 
     await driver.findElement(By.css(".plant_btn")).click()
     // 7 | click | xpath=//label[@id='potato_crop'] | 
-    await driver.wait(until.elementIsVisible(await driver.findElement(By.xpath("//label[@id=\'potato_crop\']"))), 3000)
-    await driver.sleep(2000);
+    await driver.wait(until.elementIsVisible(await driver.findElement(By.xpath("//label[@id=\'potato_crop\']"))), 1000)
+    await driver.sleep(1000);
     // 9 | click | id=crop_to_plant_btn | 
     await driver.findElement(By.id("crop_to_plant_btn")).click()
     // 10 | verifyElementPresent | css=.potato_planted | 
