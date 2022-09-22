@@ -3,7 +3,7 @@
     "chai": "^4.3.6"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha tests/frontend/*.test.js"
+    "test": "./node_modules/.bin/mocha tests/frontend/*.spec.js"
   },
   "dependencies": {
     "chromedriver": "^105.0.1",

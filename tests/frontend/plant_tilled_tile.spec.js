@@ -45,12 +45,12 @@ describe('Plant Tilled Tiles', function() {
     // 6 | click | css=.plant_btn | 
     await driver.findElement(By.css(".plant_btn")).click()
     // 7 | click | xpath=//label[@id='potato_crop'] | 
-    await driver.wait(until.elementIsVisible(await driver.findElement(By.xpath("//label[@id=\'potato_crop\']"))), 3000)
-    await driver.sleep(2000);
+    await driver.wait(until.elementIsVisible(await driver.findElement(By.xpath("//label[@id=\'potato_crop\']"))), 1000)
+    await driver.sleep(1000);
     // 8 | click | id=crop_to_plant_btn | 
     await driver.findElement(By.id("crop_to_plant_btn")).click()
     selected_tile  = await driver.findElement(By.id("tile_id_0"));
     let tile_class = await selected_tile.getAttribute('class');
-    expect(tile_class).to.not.eq('has_plant');
+    expect(tile_class.split(" ")[0]).to.eq('has_plant');
   })
 })

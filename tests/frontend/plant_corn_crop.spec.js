@@ -58,7 +58,7 @@ describe('Plant a corn crop', function() {
     await driver.findElement(By.id("crop_to_plant_btn")).click()
     selected_tile  = await driver.findElement(By.id("tile_id_15"));
     let tile_class = await selected_tile.getAttribute('class');
-    expect(tile_class).to.not.eq('carrot_planted');
+    expect(tile_class.split(" ")[1]).to.eq('corn_planted');
   })
 
   it("Total Earnings should have a value of 65", async function() {

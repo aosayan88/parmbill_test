@@ -10,7 +10,7 @@ const screen = {
   height: 1920
 };
 
-describe('Harvest a potato crop', function() {
+describe('Harvest a planted potato', function() {
   this.timeout(30000)
   let driver
   let vars
@@ -47,19 +47,19 @@ describe('Harvest a potato crop', function() {
     await driver.sleep(1000);
     // 8 | click | id=crop_to_plant_btn | 
     await driver.findElement(By.id("crop_to_plant_btn")).click()
+    // 9 | verifyElementPresent | css=.potato_planted | 
     selected_tile  = await driver.findElement(By.id("tile_id_0"));
     let tile_class = await selected_tile.getAttribute('class');
-    expect(tile_class).to.not.eq('potato_planted');
+    expect(tile_class.split(" ")[1]).to.eq('potato_planted');
   })
 
-  it("Total Earnings should have a value of 90", async function() {
+  it("Total Earnings should have a value of 90 after planting potato crop", async function() {
     // 7 | click | xpath=//label[@id='potato_crop'] | 
     await driver.wait(until.elementIsVisible(await driver.findElement(By.xpath("//label[@id=\'potato_crop\']"))), 1000)
     await driver.sleep(1000);
     // 8 | click | id=crop_to_plant_btn | 
     await driver.findElement(By.id("crop_to_plant_btn")).click()
-    // 9 | verifyElementPresent | css=.potato_planted | 
-    // 10 | verifyText | css=.total_earnings_value | 90
+    // 9 | verifyText | css=.total_earnings_value | 90
     let total_earnings = await driver.findElement(By.css(".total_earnings_value")).getText()
     expect(total_earnings).to.eq("90");
   })
@@ -74,7 +74,7 @@ describe('Harvest a potato crop', function() {
     await driver.wait(until.elementLocated(By.css(".harvest")), 5000)
     selected_tile  = await driver.findElement(By.id("tile_id_0"));
     let tile_class = await selected_tile.getAttribute('class');
-    expect(tile_class).to.not.eq('harvest');
+    expect(tile_class.split(" ")[1]).to.eq('harvest');
   })
 
   it("Planted potato tile should have $15 tile text", async function() {
@@ -109,56 +109,4 @@ describe('Harvest a potato crop', function() {
     let total_earnings = await driver.findElement(By.css(".total_earnings_value")).getText()
     expect(total_earnings).to.eq("105");
   })
-
-  // it("Selected tile class should have 'potato_planted'", async function() {
-  //   // 7 | click | xpath=//label[@id='potato_crop'] | 
-  //   await driver.wait(until.elementIsVisible(await driver.findElement(By.xpath("//label[@id=\'potato_crop\']"))), 1000)
-  //   await driver.sleep(1000);
-  //   // 8 | click | id=crop_to_plant_btn | 
-  //   await driver.findElement(By.id("crop_to_plant_btn")).click()
-    
-  // })
-
-  // it('harvest_potato_crop', async function() {
-  //   // Test name: harvest_potato_crop
-  //   // Step # | name | target | value
-  //   // 1 | open | http://127.0.0.1:5501/bahay_cube.html | 
-  //   await driver.get("http://127.0.0.1:5501/bahay_cube.html")
-  //   // 2 | setWindowSize | 1294x1392 | 
-  //   await driver.manage().window().setRect({ width: 1294, height: 1392 })
-  //   // 3 | click | id=tile_id_0 | 
-  //   await driver.findElement(By.id("tile_id_0")).click()
-  //   // 4 | click | css=.till_btn | 
-  //   await driver.findElement(By.css(".till_btn")).click()
-  //   // 5 | click | id=tile_id_0 | 
-  //   await driver.findElement(By.id("tile_id_0")).click()
-  //   // 6 | verifyElementPresent | css=.tilled | 
-  //   {
-  //     const elements = await driver.findElements(By.css(".tilled"))
-  //     assert(elements.length)
-  //   }
-  //   // 7 | click | css=.plant_btn | 
-  //   await driver.findElement(By.css(".plant_btn")).click()
-  //   // 8 | click | xpath=//label[@id='potato_crop'] | 
-  //   await driver.findElement(By.xpath("//label[@id=\'potato_crop\']")).click()
-  //   // 9 | click | id=crop_to_plant_btn | 
-  //   await driver.findElement(By.id("crop_to_plant_btn")).click()
-  //   // 10 | verifyElementPresent | css=.potato_planted | 
-  //   {
-  //     const elements = await driver.findElements(By.css(".potato_planted"))
-  //     assert(elements.length)
-  //   }
-  //   // 11 | verifyText | css=.total_earnings_value | 90
-  //   assert(await driver.findElement(By.css(".total_earnings_value")).getText() == "90")
-  //   // 12 | waitForElementPresent | css=.harvest | 5000
-  //   await driver.wait(until.elementLocated(By.css(".harvest")), 5000)
-  //   // 13 | waitForText | css=#tile_id_0 > .tile_text | $15
-  //   await driver.wait(until.elementTextIs(await driver.findElement(By.css("#tile_id_0 > .tile_text")), '$15'), 30000)
-  //   // 14 | click | id=tile_id_0 | 
-  //   await driver.findElement(By.id("tile_id_0")).click()
-  //   // 15 | click | id=harvest_btn | 
-  //   await driver.findElement(By.id("harvest_btn")).click()
-  //   // 16 | verifyText | css=.total_earnings_value | 105
-  //   assert(await driver.findElement(By.css(".total_earnings_value")).getText() == "105")
-  // })
 })
